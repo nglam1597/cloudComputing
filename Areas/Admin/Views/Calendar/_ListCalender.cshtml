@@ -1,0 +1,32 @@
+﻿
+@model List<NamekWebPes.Models.CalendarModel>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Đội A</th>
+                <th scope="col"></th>
+                <th scope="col">v</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Đội B</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td></td>
+                <td>@item.Membername1</td>
+                <td></td>
+                <td>-</td>
+                <td></td>
+                <td></td>
+                <td>@item.Membername2</td>
+            </tr>
+            }
+
+
+        </tbody>
+    </table>

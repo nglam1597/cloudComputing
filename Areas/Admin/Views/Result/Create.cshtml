@@ -1,0 +1,396 @@
+﻿@model NamekWebPes.Areas.Admin.Models.ResultViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <!--CSS Result -->
+    <link href="/Assets/admin/css/plugins.css" rel="stylesheet">
+    <link href="/Assets/admin/css/style.css" rel="stylesheet">
+    <link href="/Assets/admin/css/responsive.css" rel="stylesheet">
+    <link href="/Assets/admin/css/custom.css" rel="stylesheet">
+    <link href="~/Assets/admin/css/validatecontrol.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- LOAD JQUERY LIBRARY -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+</head>
+
+<body>
+    <h4 style="text-align:center">Nhập tỉ số và kết quả thi đấu</h4>
+    <div class="container" style="margin-top:3%">
+        @*@*tạo một cửa sổ Modal bật lên với mẫu đăng ký để thêm và sửa Student Record*@
+        <div>
+            <form id="form">
+                <fieldset id="SubmitForm">
+                    @Html.HiddenFor(m => m.ID, new { @id = "ReID" })
+                    <div class="form-group col-md-6">
+                        @if (ViewBag.VongDauList != null)
+                        {
+                            @Html.DropDownListFor(model => model.VongDau, ViewBag.VongDauList as SelectList, "--Chọn Vòng Đấu--", new { @class = "form-control" })
+
+                        }
+                    </div>
+
+                    <div class="form-group col-md-6" style="text-align:center">
+                        @if (ViewBag.TranDauList != null)
+                        {
+                            @Html.DropDownListFor(model => model.CalendarID, ViewBag.TranDauList as SelectList, "-- Chọn Trận Đấu --", new { @class = "form-control", @id = "CalendarID" })
+                        }
+                    </div>
+                    <table style="margin-top:30px" id="tableMains">
+                        <thead>
+                            <tr style="text-align:center">
+                                <td style="width:206px">Người Chơi</td>
+                                <td><label for="inputGoal">Bàn thắng</label></td>
+                                <td><label for="inputLost">Bàn thua</label></td>
+                                <td><label for="inputPoint">Điểm</label></td>
+                                <td><label for="inputYellowcard">Thẻ vàng</label></td>
+                                <td><label for="inputRedcard">Thẻ đỏ</label></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="tr1">
+                                <td id="MemberID1" name="MemberID"> </td>
+                                <lable class="errorG"></lable>
+                                <td>
+
+                                    @Html.TextBoxFor(model => model.Goal, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "txtGoal", @required = "required", @onchange = "onchangeeventGoal();", @autofocus = "autofocus" , @min="0"})
+                                </td>
+                                <lable class="errorL"></lable>
+                                <td>
+
+                                    @Html.TextBoxFor(model => model.Lost, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "txtLost", @required = "required", @onchange = "onchangeeventLost();", @autofocus = "autofocus", @min = "0" })
+                                </td>
+
+                                <td>
+
+                                    @Html.TextBoxFor(model => model.Point, new { @class = "form-control", @type = "number", @disabled = "@disabled", @id = "txtPoint", @required = "required", @onchange = "onchangeeventPoint();", @autofocus = "autofocus" })
+                                    @Html.TextBoxFor(model => model.Point, new { @class = "form-control", @type = "hidden", @id = "txtPoint", @required = "required", @onchange = "onchangeeventPoint();", @autofocus = "autofocus" })
+                                </td>
+                                <lable class="errorY"></lable>
+                                <td>
+                                    @Html.TextBoxFor(model => model.Yellowcard, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "Yellowcard", @required = "required", @autofocus = "autofocus", @min = "0" })
+                                </td>
+                                <lable class="errorR"></lable>
+                                <td>
+                                    @Html.TextBoxFor(model => model.Redcard, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "Redcard", @required = "required", @autofocus = "autofocus", @min = "0" })
+                                </td>
+                            </tr>
+                            <tr id="tr2">
+                                <td id="MemberID2" name="MemberID"> </td>
+                                <lable class="errorG1"></lable>
+                                <td>
+                                    @Html.TextBoxFor(model => model.Goal, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "txtGoal1", @required = "required", @onchange = "onchangeeventGoal1();", @autofocus = "autofocus", @min = "0" })
+                                </td>
+                                <lable class="errorL1"></lable>
+                                <td>
+                                    @Html.TextBoxFor(model => model.Lost, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "txtLost1", @required = "required", @onchange = "onchangeeventLost1();", @autofocus = "autofocus", @min = "0" })
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(model => model.Point, new { @class = "form-control", @type = "number", @disabled = "@disabled", @id = "txtPoint1", @required = "required", @onchange = "onchangeeventPoint1();", @autofocus = "autofocus" })
+                                    @Html.TextBoxFor(model => model.Point, new { @class = "form-control", @type = "hidden", @id = "txtPoint1", @required = "required", @onchange = "onchangeeventPoint1();", @autofocus = "autofocus" })
+                                </td>
+                                <lable class="errorY1"></lable>
+                                <td>
+                                    @Html.TextBoxFor(model => model.Yellowcard, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "Yellowcard1", @required = "required", @autofocus = "autofocus", @min = "0" })
+
+                                </td>
+                                <lable class="errorR1"></lable>
+                                <td>
+                                    @Html.TextBoxFor(model => model.Redcard, new { @class = "form-control", @type = "number", onkeypress = "return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57", @id = "Redcard1", @required = "required", @autofocus = "autofocus", @min = "0" })
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    <div class="form-group">
+                        <div class="col-md-3" style="margin-left:450px">
+                            <a href="#" class="btn btn-block btn-primary" id="SaveResultRecord">Save</a>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
+    </div>
+
+    <!--JS Result-->
+    <script src="/Assets/admin/js/jquery.js"></script>
+    <script src="/Assets/admin/js/plugins.js"></script>
+
+    <!--Template functions-->
+    <script src="/Assets/admin/js/functions.js"></script>
+    @section jsFooter{
+        <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <!--Thay doi cua Vong dau-->
+        <script>
+            $(document).ready(function () {
+                $("#VongDau").change(function () {
+                    $.get("/Result/GetTranDau", { VongDau: $("#VongDau").val() }, function (data) {
+                        $("#CalendarID").empty();
+                        $.each(data, function (index, row) {
+                            $("#CalendarID").append("<option value='" + row.CalendarID + "'>" + row.TenTranDau + "</option>")
+                        });
+                    });
+                })
+            });
+
+            //<!--Thay doi cua tran dau-->
+
+            $(document).ready(function () {
+                $("#CalendarID").change(function (count) {
+                    var count = 0;
+                    $.get("/Result/GetMember", { CalendarID: $("#CalendarID").val() }, function (data) {
+                        count++;
+                        if (count == 1) {
+                            $("#MemberID3").remove();
+                            $("#MemberID4").remove();
+                            $("#MemberID5").remove();
+                            $("#MemberID6").remove();
+                            $("#MemberID1").append(`<input name="MemberID" id ="MemberID3" value=" ${data[0].Membername}">`)
+                            $("#MemberID1").append(`<input type="hidden" name="MemberID" id ="MemberID5" value=" ${data[0].MemberID}">`)
+
+                            $("#MemberID2").append(`<input name="MemberID" id ="MemberID4" value=" ${data[1].Membername}">`)
+                            $("#MemberID2").append(`<input type="hidden" name="MemberID" id ="MemberID6" value=" ${data[1].MemberID}">`)
+                        }
+                        else {
+                            $("#MemberID1").append(`<input name="MemberID" id ="MemberID3" value=" ${data[0].Membername}">`)
+                            $("#MemberID1").append(`<input type="hidden" name="MemberID" id ="MemberID5" value=" ${data[0].MemberID}">`)
+
+                            $("#MemberID2").append(`<input name="MemberID" id ="MemberID4" value=" ${data[1].Membername}">`)
+                            $("#MemberID2").append(`<input type="hidden" name="MemberID" id ="MemberID6" value=" ${data[1].MemberID}">`)
+                        }
+                    });
+                })
+            });
+
+
+            //Lưu kết quả vể Database
+            $("#SaveResultRecord").click(function (e) {
+                var table = $('#tableMains tbody')
+                var lstqHRelations = [];
+
+                //Nguoi Choi 1
+                id = $('#MemberID5').val(),
+                    c = $('#CalendarID').val(),
+                    g = $('#txtGoal').val(),
+                    l = $('#txtLost').val();
+                p = $('#txtPoint').val(),
+                    y = $('#Yellowcard').val(),
+                    r = $('#Redcard').val();
+
+                var object = new Object();
+                object.MemberID = id;
+                object.CalendarID = c;
+                object.Goal = g;
+                object.Lost = l;
+                object.Point = p;
+                object.Yellowcard = y;
+                object.Redcard = r;
+                lstqHRelations.push(object);
+
+                //Nguoi choi 2
+                id1 = $('#MemberID6').val(),
+                    c1 = $('#CalendarID').val(),
+                    g1 = $('#txtGoal1').val(),
+                    l1 = $('#txtLost1').val();
+                p1 = $('#txtPoint1').val(),
+                    y1 = $('#Yellowcard1').val(),
+                    r1 = $('#Redcard1').val();
+                var object1 = new Object();
+                object1.MemberID = id1;
+                object.CalendarID = c1;
+                object1.Goal = g1;
+                object1.Lost = l1;
+                object1.Point = p1;
+                object1.Yellowcard = y1;
+                object1.Redcard = r1;
+                lstqHRelations.push(object1);
+
+                var params = {
+                    lst: lstqHRelations
+                };
+
+                if ($("#MemberID3").val() == null || $("#MemberID3").val() == " " || $("#MemberID3").val() == undefined) {
+                    alert("Mời chọn trận đấu");
+                }
+                if ($('#txtGoal').val() == "" || $('#txtGoal').val() == null || $('#txtGoal').val() == undefined) {
+                    $('.errorG').text('Mời nhập số bàn thắng');
+                    $('.errorG').fadeIn('slow');
+                    $('.errorG').fadeOut(1500);
+                }
+                if ($('#txtLost1').val() == "" || $('#txtLost1').val() == null || $('#txtLost1').val() == undefined) {
+                    $('.errorL1').text('Mời nhập số bàn thua');
+                    $('.errorL1').fadeIn('slow');
+                    $('.errorL1').fadeOut(1500);
+                }
+                if ($('#txtLost').val() == "" || $('#txtLost').val() == null || $('#txtLost').val() == undefined) {
+                    $('.errorL').text('Mời nhập số bàn thua');
+                    $('.errorL').fadeIn('slow');
+                    $('.errorL').fadeOut(1500);
+                }
+                if ($('#txtGoal1').val() == "" || $('#txtGoal1').val() == null || $('#txtGoal1').val() == undefined) {
+                    $('.errorG1').text('Mời nhập số bàn thắng');
+                    $('.errorG1').fadeIn('slow');
+                    $('.errorG1').fadeOut(1500);
+                }
+                if ($('#Yellowcard').val() == "" || $('#Yellowcard').val() == null || $('#Yellowcard').val() == undefined) {
+                    $('.errorY').text('Mời nhập số thẻ vàng');
+                    $('.errorY').fadeIn('slow');
+                    $('.errorY').fadeOut(1500);
+                }
+                if ($('#Yellowcard1').val() == "" || $('#Yellowcard1').val() == null || $('#Yellowcard1').val() == undefined) {
+                    $('.errorY1').text('Mời nhập số thẻ vàng');
+                    $('.errorY1').fadeIn('slow');
+                    $('.errorY1').fadeOut(1500);
+                }
+                if ($('#Redcard').val() == "" || $('#Redcard').val() == null || $('#Redcard').val() == undefined) {
+                    $('.errorR').text('Mời nhập số thẻ đỏ');
+                    $('.errorR').fadeIn('slow');
+                    $('.errorR').fadeOut(1500);
+                }
+                if ($('#Redcard1').val() == "" || $('#Redcard1').val() == null || $('#Redcard1').val() == undefined) {
+                    $('.errorR1').text('Mời nhập số thẻ đỏ');
+                    $('.errorR1').fadeIn('slow');
+                    $('.errorR1').fadeOut(1500);
+                }
+                if ($('#txtGoal').val() == "" || $('#txtLost').val() == "" || $('#txtPoint').val() == "" || $('#Yellowcard').val() == "" || $('#Redcard').val() == "" ||
+                    $('#txtGoal1').val() == "" || $('#txtLost1').val() == "" || $('#txtPoint1').val() == "" || $('#Yellowcard1').val() == "" || $('#Redcard1').val() == "") {
+                    
+                }
+                else {
+                    $.ajax({
+                        url: "/Result/SaveDataDatabase",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            lst: lstqHRelations
+                        },
+                        success: function (result) {
+                            if (result.status == -1) {
+                                alert(result.msg);
+                                window.location.href = "/Admin/Result/create";
+                                return;
+                            }
+                            if (result.status == -2) {
+                                alert(result.msg);
+                                return;
+                            }
+                            if (result.status == 1) {
+                                alert(result.msg);
+                                window.location.href = "/Admin/Result/index";
+                                return;
+                            }
+                        }, error: function (xhr) {
+
+                        }
+                    });
+                }
+            });
+        </script>
+
+        <!--Tinh diem-->
+        <script>
+            //Doi 1
+            function onchangeeventGoal() {
+                var Goal = $('#txtGoal').val();
+                var Lost = $('#txtLost').val();
+                if (Goal > Lost) {
+                    $('#txtPoint').val(3);
+                    $('#txtPoint1').val(0);
+                    $('#txtLost1').val(parseInt(Goal));
+
+                }
+                if (Goal == Lost) {
+                    $('#txtPoint').val(1);
+                    $('#txtPoint1').val(1);
+                    $('#txtLost1').val(parseInt(Goal));
+                }
+                if (Goal < Lost) {
+                    $('#txtPoint').val(0);
+                    $('#txtPoint1').val(3);
+                    $('#txtLost1').val(parseInt(Goal));
+                }
+
+
+            }
+            function onchangeeventLost() {
+                var Goal = $('#txtGoal').val();
+                var Lost = $('#txtLost').val();
+                if (Goal > Lost) {
+                    $('#txtPoint').val(3);
+                    $('#txtPoint1').val(0);
+                    $('#txtGoal1').val(parseInt(Lost));
+                }
+                if (Goal == Lost) {
+                    $('#txtPoint').val(1);
+                    $('#txtPoint1').val(1);
+                    $('#txtGoal1').val(parseInt(Lost));
+                }
+
+                if (Goal < Lost) {
+                    $('#txtPoint').val(0);
+                    $('#txtPoint1').val(3);
+                    $('#txtGoal1').val(parseInt(Lost));
+                }
+
+            }
+
+            //Doi 2
+            function onchangeeventGoal1() {
+                var Goal = $('#txtGoal1').val();
+                var Lost = $('#txtLost1').val();
+                if (Goal > Lost) {
+                    $('#txtPoint1').val(3);
+                    $('#txtPoint').val(0);
+                    $('#txtLost').val(parseInt(Goal));
+
+                }
+                if (Goal == Lost) {
+                    $('#txtPoint1').val(1);
+                    $('#txtPoint').val(1);
+                    $('#txtLost').val(parseInt(Goal));
+                }
+                if (Goal < Lost) {
+                    $('#txtPoint1').val(0);
+                    $('#txtPoint').val(3);
+                    $('#txtLost').val(parseInt(Goal));
+                }
+            }
+
+            function onchangeeventLost1() {
+                var Goal = $('#txtGoal1').val();
+                var Lost = $('#txtLost1').val();
+                if (Goal > Lost) {
+                    $('#txtPoint1').val(3);
+                    $('#txtPoint').val(0);
+                    $('#txtGoal').val(parseInt(Lost));
+                }
+                if (Goal == Lost) {
+                    $('#txtPoint1').val(1);
+                    $('#txtPoint').val(1);
+                    $('#txtGoal').val(parseInt(Lost));
+                }
+
+                if (Goal < Lost) {
+                    $('#txtPoint1').val(0);
+                    $('#txtPoint').val(3);
+                    $('#txtGoal').val(parseInt(Lost));
+                }
+            }
+        </script>
+    }
+
+</body>
+</html>
+

@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<NamekWebPes.Models.CalendarModel>
+<div class="site-section">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mb-5">
+                <h2 class="text-black">Lịch thi đấu</h2>
+            </div>
+        </div>
+        <table class="table table-hover border">
+            <thead>
+                <tr>
+                    <th scope="col">Ngày</th>
+                    <th scope="col">Vòng</th>
+                    <th scope="col">Đội A</th>
+                    <th scope="col"></th>
+                    <th scope="col">v</th>
+                    <th scope="col"></th>
+                    <th scope="col">Đội B</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <th scope="row">15-4-2019</th>
+                        <td>Vong @item.VongDau</td>
+                        <td>@item.Membername1</td>
+                        <td>0</td>
+                        <td>-</td>
+                        <td>0</td>
+                        <td>@item.Membername2</td>
+                    </tr>
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="~/Assets/Client/js/Project/Script.js"></script>
+

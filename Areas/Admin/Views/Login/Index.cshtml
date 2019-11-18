@@ -1,0 +1,100 @@
+﻿
+
+    @model NamekWebPes.Areas.Admin.Models.LoginModel
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Login</title>
+
+        <!-- Custom fonts for this template-->
+        <link href="/Assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+        <!-- Custom styles for this template-->
+        <link href="/Assets/admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+    </head>
+
+    <body class="bg-gradient-primary" style="background-image: -webkit-gradient(linear,left top,left bottom,color-stop(10%,#FFFFFF),to(#224abe));">
+
+        <div class="container">
+
+            <!-- Outer Row -->
+            <div class="row justify-content-center">
+
+                <div class="col-xl-10 col-lg-12 col-md-9">
+
+                    <div class="card o-hidden border-0 shadow-lg my-5">
+                        <div class="card-body p-0">
+                            <!-- Nested Row within Card Body -->
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <img src="~/Assets/admin/images/Cristiano-Ronaldo-Wallpaper..1.jpg" alt="Image" style="max-width: 230%;"    />
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="p-5" style="position: relative;top: 13px;left: 14px;transition: none 0s ease 0s;cursor: move;">
+                                        <div class="text-center">
+                                            <h1 class="h4 text-gray-900 mb-4" style="color: #FFFF!important;">Chào Mừng Người Dùng </h1>
+                                        </div>
+                                        
+                                            @using (Html.BeginForm("Login", "Login", FormMethod.Post,new {@class="user",@style= "color: #fff;"}))
+                                            {
+                                                @Html.ValidationSummary(false, "",new {@class="bg-gradient-danger" });
+                                                <fieldset>
+
+                                                    <div class="form-group">
+                                                        @Html.TextBoxFor(Model => Model.UserName, new { @class = "form-control form-control-user", placeholder = "Tên Đăng Nhập", autofocus = "autofocus" })
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.TextBoxFor(Model => Model.Password, new { @class = "form-control form-control-user", type = "password", placeholder = "Mật Khẩu" })
+
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input name="remember" type="checkbox" value="Remember Me">Remember 
+                                                        </label>
+                                                    </div>
+                                                    <!-- Change this to a button or input when using this as a form -->
+                                                    <button type="submit" class="btn btn-primary btn-user btn-block">Đăng Nhập</button>
+                                                </fieldset>
+                                            }
+                                            <hr>
+
+                                        
+                                        <hr>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Bootstrap core JavaScript-->
+        <script src="/Assets/admin/vendor/jquery/jquery.min.js"></script>
+        <script src="/Assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Core plugin JavaScript-->
+        <script src="/Assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script src="/Assets/admin/js/sb-admin-2.min.js"></script>
+
+    </body>
+
+</html>

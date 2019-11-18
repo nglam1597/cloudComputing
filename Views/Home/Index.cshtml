@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listCalendar = (List<NamekWebPes.Models.CalendarModel>)ViewBag.models;
+
+}
+
+<div class="slide-one-item home-slider owl-carousel">
+</div>
+
+
+<div class="site-section pt-0 feature-blocks-1" data-aos="fade" data-aos-delay="100" style="    position: relative;top: 106px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 p-md-5 feature-block-1 mb-5 mb-lg-0 bg" style="background-image: url('/Assets/Client/images/pesnamek1.jpg');">
+                    <div class="text">
+                        <h2 class="h5 text-white">Giải PES Namek 2019</h2>
+                        <p>Với tinh thần vui là chính giải là quan trọng nên chúng ta phải chiến đấu hết mình.</p>
+                        <p class="mb-0"><a href="#" class="btn btn-primary btn-sm px-4 py-2 rounded-0">Xem thêm</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 p-md-5 feature-block-1 mb-5 mb-lg-0 bg" style="background-image: url('/Assets/Client/images/cocaro.png');">
+                    <div class="text">
+                        <h2 class="h5 text-white">Giải Cờ Ca Rô 2019</h2>
+                        <p>Nhằm nâng cao tình thần đồng đội và phát triển tư duy sáng tạo của nhân viên.</p>
+                        <p class="mb-0"><a href="#" class="btn btn-primary btn-sm px-4 py-2 rounded-0">Xem thêm</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="p-3 p-md-5 feature-block-1 mb-5 mb-lg-0 bg" style="background-image: url('/Assets/Client/images/baibac.jpg');">
+                    <div class="text">
+                        <h2 class="h5 text-white">Giải Bài Bạc 2019</h2>
+                        <p>Nhằm gây quỹ từ thiện cho vào lợn và đồ ăn trong tủ lạnh, nên việc tổ chức giải phải thường xuyên.</p>
+                        <p class="mb-0"><a href="#" class="btn btn-primary btn-sm px-4 py-2 rounded-0">Xem thêm</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="site-blocks-vs site-section bg-light" style="position: relative;    top: 73px;">
+    <div class="container">
+
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <h2 class="h6 text-uppercase text-black font-weight-bold mb-3">Lịch thi đấu</h2>
+                <div class="site-block-tab">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <select id="inputState" class="form-control">
+                            @foreach (var item in listCalendar.Select(x=>x.VongDau).Distinct())
+                            {
+                                <option value="@item.Value">Vòng @item.Value </option>
+                            }
+
+
+                        </select>
+
+
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+
+                            <div class="row align-items-center">
+                                <div id="lstMember" class="col-md-12">
+
+
+                                    @foreach (var item in listCalendar.Where(x=>x.VongDau==1))
+                                    {
+                                        <div class="row bg-white align-items-center ml-0 mr-0 py-4 match-entry">
+                                            <div class="col-md-4 col-lg-4 mb-4 mb-lg-0">
+
+                                                <div class="text-center text-lg-left">
+                                                    <div class="d-block d-lg-flex align-items-center">
+                                                        <div class="image image-small text-center mb-3 mb-lg-0 mr-lg-3">
+                                                            <img src="@item.image1" alt="Image" class="img-fluid">
+                                                        </div>
+                                                        <div class="text">
+                                                            <h3 id="mem1" class="h5 mb-0 text-black">@item.Membername1</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 text-center mb-4 mb-lg-0">
+                                                <div class="d-inline-block">
+                                                    <div class="bg-black py-2 px-4 mb-2 text-white d-inline-block rounded"><span class="h5">@item.Goal-@item.Lost</span></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4 col-lg-4 text-center text-lg-right">
+                                                <div class="">
+                                                    <div class="d-block d-lg-flex align-items-center">
+                                                        <div class="image image-small ml-lg-3 mb-3 mb-lg-0 order-2">
+                                                            <img src="@item.image2" alt="Image" class="img-fluid">
+                                                        </div>
+                                                        <div class="text order-1 w-100">
+                                                            <h3 id="mem2" class="h5 mb-0 text-black">@item.Membername2</h3>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="h6 text-uppercase text-black font-weight-bold mb-3 m-6">Bảng xếp hạng</h2>
+            @{
+                Html.RenderAction("RankH");
+            }
+
+        </div>
+    </div>
+
+
+    <div class="site-section block-13 bg-primary fixed overlay-primary bg-image" style="background-image: url('images/hero_bg_3.jpg');    background-position: 0% -206.573px;position: relative;    top: 46px;" data-stellar-background-ratio="0.5">
+
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-12 text-center">
+                    <h2 class="text-white">Các giải đấu trong năm 2018 - 2019</h2>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="nonloop-block-13 owl-carousel">
+                    <div class="item">
+                        <!-- uses .block-12 -->
+                        <div class="block-12">
+                            <figure>
+                                <img src="/Assets/Client/images/sukien1.jpg" alt="Image" class="img-fluid" style="height: 250px">
+                            </figure>
+                            <div class="text">
+                                <span class="meta">15/11/2018</span>
+                                <div class="text-inner">
+                                    <h2 class="heading mb-3"><a href="#" class="text-black">Giải Pes Namek lần I</a></h2>
+                                    <p>Giải pes lần 1 tổ chức thành công vang dội, với 7 đội bóng tham gia, với thành tích kém xuất sắc Game thủ Tuấn đã dành vô địch kém thuyết phục... </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="block-12">
+                            <figure>
+                                <img src="/Assets/Client/images/liengmorong.jpg" alt="Image" class="img-fluid" style="height: 250px">
+                            </figure>
+                            <div class="text">
+                                <span class="meta">11/12/2018</span>
+                                <div class="text-inner">
+                                    <h2 class="heading mb-3"><a href="#" class="text-black"> Liêng, ba cây mở rộng</a></h2>
+                                    <p>Với tiêu chí gây quỹ cho lợn ăn và lấp đầy chỗ trống tủ lạnh chúng ta cần phải tổ chức cuộc chơi bài bạc thường xuyên.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="block-12">
+                            <figure>
+                                <img src="/Assets/Client/images/giaipes2.png" alt="Image" class="img-fluid" style="height: 250px">
+                            </figure>
+                            <div class="text">
+                                <span class="meta">15/03/2019</span>
+                                <div class="text-inner">
+                                    <h2 class="heading mb-3"><a href="#" class="text-black">Giải Pes Namek lần II</a></h2>
+                                    <p>Để nâng cao tình thần đồng đội và thư giãn sau thời gian làm việc, Namek tổ chức giải Pes lần II với quy mô lớn hơn lần I.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="block-12">
+                            <figure>
+                                <img src="/Assets/Client/images/cocaro.jpg" alt="Image" class="img-fluid" style="height: 250px">
+                            </figure>
+                            <div class="text">
+                                <span class="meta">20/02/2019</span>
+                                <div class="text-inner">
+                                    <h2 class="heading mb-3"><a href="#" class="text-black">Giải cờ ca rô</a></h2>
+                                    <p>Với tinh thần giảm bớt xì troét sau giờ làm việc, giải cờ ca rô được tổ chức với 4 đội tham gia để cọ sát trau dồi kiến thức cho nhau.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="site-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-12 text-center">
+                    <h2 class="text-black">Tin tức và sự kiện Namek 2019</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <a href="tintuc1.html">
+                        <div class="post-entry">
+                            <div class="image" style="width: 100%;">
+                                <img src="/Assets/Client/images/duxuan1.jpg" alt="Image" class="img-fluid" style="height: 265px;border-radius: 0px;">
+                            </div>
+                            <div class="text p-4">
+                                <h2 class="h5 text-black"><a href="tintuc1.html">Du xuân đầu năm Namek 2019</a></h2>
+                                <span class="text-uppercase date d-block mb-3"><small>Du xuân &bullet; 15/02/2019</small></span>
+                                <p class="mb-0">Du xuân Thumbnail Hoà Bình đầu năm 2019, một buổi đi chơi vui vẻ đầy ý nghĩa của gia đình Namek ...</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="tintuc2.html">
+                        <div class="post-entry">
+                            <div class="image"style="width: 100%;">
+                                <img src="/Assets/Client/images/cocaro.jpg" alt="Image" class="img-fluid" style="height: 265px;border-radius: 0px;">
+                            </div>
+                            <div class="text p-4">
+                                <h2 class="h5 text-black"><a href="tintuc2.html">Namek đề cao sự sáng tạo</a></h2>
+                                <span class="text-uppercase date d-block mb-3"><small>Công việc &bullet; 25/04/2019</small></span>
+                                <p class="mb-0">Namek đề cao sự sáng tạo để hướng tới các mục tiêu to lớn hơn đó là sự hài lòng, niềm tin của khách hàng ...</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <a href="tintuc3.html">
+                        <div class="post-entry">
+                            <div class="image"style="width: 100%;">
+                                <img src="/Assets/Client/images/duxuan.jpg" alt="Image" class="img-fluid" style="height: 265px;border-radius: 0px;">
+                            </div>
+                            <div class="text p-4">
+                                <h2 class="h5 text-black"><a href="tintuc3.html">Team building Namek 2019</a></h2>
+                                <span class="text-uppercase date d-block mb-3"><small>Đi chơi &bullet; 20/03/2019</small></span>
+                                <p class="mb-0">Team building gia đình Namek nêu cao tình thần đồng đội gắn bó keo sơn như một gia đình ... </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+           // ajax
+            $('#inputState').on("change", function () {
+                var idVongdau = $("#inputState").children(":selected").val();
+                $.ajax({
+                    url: '/Home/GetTenByVongDau',
+                    type: 'POST',
+                    data: 'IDvongdau=' + idVongdau,
+                    success: function (data) {
+                        $("#lstMember").empty();
+                        $("#lstMember").html(data);           
+                    }
+               
+                })
+            })
+           
+
+        });
+    </script>

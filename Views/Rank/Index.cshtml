@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<NamekWebPes.Models.ResultModel>
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center mb-5">
+                <h2 class="text-black">Bảng xếp hạng</h2>
+            </div>
+        </div>
+        <table class="table table-hover border">
+            <thead>
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Team</th>
+                    <th scope="col">Người chơi</th>
+                    <th scope="col">Thắng</th>
+
+                    <th scope="col">Hòa</th>
+                    <th scope="col">Thua</th>
+                    <th scope="col">BThắng</th>
+                    <th scope="col">BThua</th>
+
+                    <th scope="col">Thẻ Vàng</th>
+                    <th scope="col">Thẻ Đỏ</th>
+ 
+                    <th scope="col">Điểm</th>
+                </tr>
+            </thead>
+            <tbody>
+               @{
+                   int stt = 0;
+                   foreach (var item in Model.OrderByDescending(x => x.Point).ThenByDescending(x => x.win).ThenByDescending(x=>x.Goal))
+                {
+                       stt++;
+                    <tr>
+                    <th scope="row">@stt</th>
+                    <td><img src="@item.Logo" style="width: 30px"></td>
+                    <td>@item.Membername</td>
+                    <td>@item.win</td>
+                    <td>@item.hoa</td>
+                    <td>@item.blost</td>
+                    <td>@item.Goal</td>
+                    <td>@item.Lost</td>
+                    <td>@item.Yellowcard</td>
+                    <td>@item.Redcard</td>
+                    <td>@item.Point</td>
+                
+                    </tr>
+
+                }
+                   }
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<NamekWebPes.Models.MemberModel>
+<table id="tableshow" class="table table-hover border">
+    <thead>
+        <tr>
+            <th scope="col">STT</th>
+
+            <th scope="col">Club</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int stt = 0;
+            foreach (var item in Model)
+            {
+                stt++;
+                <tr>
+                    <th scope="row">@stt</th>
+
+                    <td class="club">@item.Club</td>
+
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>
+<div id="lstMember" class="col-md-12">
+    </div>
+
+    <script type="text/javascript">
+        $(".club").click(function () {
+            // Find the row
+            var text = $(this).text(); // Find the text
+            $.ajax({
+                url: '/Lam/tenngchoi',
+                type: 'POST',
+                data: 'tendoibong=' + text,
+                success: function (data) {
+                    $("#lstMember").empty();
+                    $("#lstMember").html(data);
+                }
+            })
+
+
+            // Let's test it out
+
+        });
+
+
+    </script>
+
+

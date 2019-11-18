@@ -1,0 +1,143 @@
+﻿@model NamekWebPes.Areas.Admin.Models.ResultViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <!--CSS Result -->
+    <link href="/Assets/admin/css/plugins.css" rel="stylesheet">
+    <link href="/Assets/admin/css/style.css" rel="stylesheet">
+    <link href="/Assets/admin/css/responsive.css" rel="stylesheet">
+    <link href="/Assets/admin/css/custom.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- LOAD JQUERY LIBRARY -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+</head>
+
+<body>
+    <div class="container" style="margin-top:3%">
+        <a href="/Admin/Result/Create" class="btn btn-info">Thêm kết quả</a> <br /><br />
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Trận Đấu</th>
+                    <th>Người Chơi</th>
+                    <th>Bàn Thắng</th>
+                    <th>Bàn thua</th>
+                    <th>Điểm</th>
+                    <th>Thẻ vàng</th>
+                    <th>Thẻ đỏ</th>
+                    <th>Sửa </th>
+                    <th>Xóa</th>
+                </tr>
+            </thead>
+            <tbody id="SetResultList">
+                <tr id="LoadingStatus" style="color:red"></tr>
+            </tbody>
+        </table>
+        @*Tạo 1 cửa sổ Modal để xóa StudetRecord*@
+        <div class="modal fade" id="DeleteConfirmation">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="#" class="close" data-dismiss="modal">&times;</a>
+                        <h4>Delete Result Record</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>Are you Sure? You want to delete Result record</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="btn btn-primary" data-dismiss="modal">Cancle</a>
+                        <a href="#" class="btn btn-danger" onclick="ConfirmDelete()">Confirm</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--JS Result-->
+    <script src="/Assets/admin/js/jquery.js"></script>
+    <script src="/Assets/admin/js/plugins.js"></script>
+    <!--Template functions-->
+    <script src="/Assets/admin/js/functions.js"></script>
+    @section jsFooter{
+        <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        <script>
+            $("#LoadingStatus").html("Loading...")
+            $.get("/Result/GetResultList", null, DataBind);
+            function DataBind(ResultList) {
+                var SetData = $("#SetResultList");
+                for (var i = 0; i < ResultList.length; i++) {
+                    var Data = "<tr class'row_" + ResultList[i].ID + "'>" +
+                        "<td>" + ResultList[i].ID + "</td>" +
+                        "<td>" + ResultList[i].CalendarID + "</td>" +
+                        "<td>" + ResultList[i].Membername + "</td>" +
+                        "<td>" + ResultList[i].Goal + "</td>" +
+                        "<td>" + ResultList[i].Lost + "</td>" +
+                        "<td>" + ResultList[i].Point + "</td>" +
+                        "<td>" + ResultList[i].Yellowcard + "</td>" +
+                        "<td>" + ResultList[i].Redcard + "</td>" +
+                        "<td>" + "<a href='#' class='btn btn-warning' onclick='EditResultRecord(" + ResultList[i].ID + ")'><span class='glyphicon glyphicon-edit'></span></a>" + "</td>" +
+                        "<td>" + "<a href='#' class='btn btn-danger' onclick='DeleteResultRecord(" + ResultList[i].ID + ")'><span class='glyphicon glyphicon-trash'></span></a>" + "</td>" +
+                        "</tr>";
+                    SetData.append(Data);
+                    $("#LoadingStatus").html(" ");
+                }
+            }
+            //Hiển thi cửa sổ Modal cho sự kiện sửa 1 Student
+
+            function EditResultRecord(ID) {
+                var url = "/Result/GetResultByID?ID=" + ID;
+                $("#ModalTitle").html("Update Result Record");
+                $("#MyModal").modal();
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        $("#ReID").val(obj.ID);
+                        $("#CalID").val(obj.CalendarID);
+                        $("#Goal").val(obj.Goal);
+                        $("#Lost").val(obj.Lost);
+                        $("#Yellowcard").val(obj.Yellowcard);
+                        $("#Redcard").val(obj.Redcard);
+                        $("#DropDwn option:selected").text(obj.Member.Membername);
+                        $("#DropDwn option:selected").val(obj.MemberID);
+
+                    }
+                })
+            }
+
+            //Xu ly su kien khi xoa Student Record
+            function DeleteResultRecord(ID) {
+                $("#ReID").val(ID);
+                $("#DeleteConfirmation").modal("show");
+            }
+
+            function ConfirmDelete() {
+                var ReID = $("#ReID").val();
+                $.ajax({
+                    type: "POST",
+                    url: "/Result/DeleteResultRecord?ID=" + ReID,
+
+                    success: function (result) {
+                        window.location.href = "/Result/index";
+                        $("#DeleteConfirmation").modal("hide");
+                        $(".row_" + ReID).remove();
+                    }
+                })
+            }
+        </script>
+    }
+
+
+</body>
+</html>
+
